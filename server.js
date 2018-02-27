@@ -6,7 +6,7 @@ var app = express();
 app.use(morgan('combined'));
 
 var articles={
-    articleOne :{
+    'article-one' :{
     title: "Article 1 | Varun Srivastava",
     heading:"Article 1",
     date:"Feb 25 2018",
@@ -18,14 +18,14 @@ var articles={
          <p>This is the content of my first article ofthe first web page
         </p>`
 },
-    articleTwo :{
+    'article-two' :{
     title: "Article 2 | Varun Srivastava",
     heading:"Article 2",
     date:"Feb 27 2018",
     content:`<p>jjhdsjhjhfdjhjzdfzdfzdfzzfz</p>`
     
 },
-    articleThree :{
+    'article-three' :{
     title: "Article 3 | Varun Srivastava",
     heading:"Article 3",
     date:"Feb 27 2018",
@@ -72,14 +72,10 @@ app.get('/', function (req, res) {
   res.send(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function(req, res) {
-   res.send(createTemplate(articleOne)); 
-});
-app.get('/article-two', function(req, res) {
-   res.sendFile(path.join(__dirname, 'ui', 'article-two.html')); 
-});
-app.get('/article-three', function(req, res) {
-   res.sendFile(path.join(__dirname, 'ui', 'article-three.html')); 
+app.get('/:articleName', function(req, res) {
+    //articleName== article-one
+   var articleName = req.params.articleName;
+   res.send(createTemplate(articles[articleName])); 
 });
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
